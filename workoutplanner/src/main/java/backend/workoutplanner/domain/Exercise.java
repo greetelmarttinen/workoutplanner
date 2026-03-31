@@ -26,7 +26,7 @@ public class Exercise {
     // parametrillinen konstruktori
     public Exercise(String name, String muscleGroup) {
         this.name = name;
-        this.muscleGroup = muscleGroup
+        this.muscleGroup = muscleGroup;
     }
 
     // getterit ja setterit
