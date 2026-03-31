@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PlannerController {
 
     @GetMapping("/index")
-    @ResponseBody
-    public String returnMessage() {
-        return "Workout Planner";
+    public String mainPage() {
+        return "index"; // index.html
     }
 
 }

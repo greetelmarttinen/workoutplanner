@@ -29,12 +29,14 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+	<!-- riippuvuudet -->
 	<dependencies>
-		<dependency>
+		<dependency> <!-- thymeleaf -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		<dependency>
+		<dependency> <!-- mvc -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
