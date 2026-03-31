@@ -16,6 +16,8 @@ public class Exercise {
     private String name;
     private String muscleGroup;
 
+    // jätin tästä nyt vielä pois description ja equipment
+
     // parametriton konstruktori
     public Exercise() {
 
