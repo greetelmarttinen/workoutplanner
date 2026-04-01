@@ -1,5 +1,6 @@
 package backend.workoutplanner.web;
 
+import backend.workoutplanner.domain.WorkoutProgramRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,13 @@ import backend.workoutplanner.domain.WorkoutProgram;
 // käsittelee clientin pyynnöt/requestit ja välittää takaisin
 // vastaukset/responset
 public class PlannerController {
+    private final WorkoutProgramRepository workoutProgramRepository;
     private ExerciseRepository exerciseRepository;
 
     // konstruktorin injektointi
-    public PlannerController(ExerciseRepository exerciseRepository) {
+    public PlannerController(ExerciseRepository exerciseRepository, WorkoutProgramRepository workoutProgramRepository) {
         this.exerciseRepository = exerciseRepository;
+        this.workoutProgramRepository = workoutProgramRepository;
     }
 
     // 'kotisivu'
