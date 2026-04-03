@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program</title>
+</head>
+
+<body>
+    <h1>Your Workout Planner</h1>
+    <br>
+    <!--uuden liikkeen lisäys (form?)-->
+    <h4>Add exercise</h4>
+    <div class="container">
+        <div>
+            <form method="post" action="#" th:action="@{/addexercise}" th:object="${addExercise}">
+                <div class="row g-2">
+                    <div class="col">
+                        <input type="text" th:field="${workoutProgramExercise.sets}" placeholder="Sets">
+                    </div>
+
+                    <div class="col">
+                        <input type="text" th:field="${workoutProgramExercise.reps}" placeholder="Reps">
+                    </div>
+
+                    <div class="col">
+                        <input type="text" th:field="${workoutProgramExercise.date}" placeholder="Date">
+                    </div>
+
+                    <div class="col">
+                        <input type="text" th:field="${workoutProgramExercise.comments}" placeholder="Comments">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--taulukko liikkeistä jne-->
+    <table>
+        <tr>
+            <th>Exercise</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Date</th>
+            <th>Comments</th>
+        </tr>
+        <tr th:each="workoutProgramExercise : ${workoutProgramExercises}">
+            <td th:text="${workoutProgramExercise.sets}"></td>
+            <td th:text="${workoutProgramExercise.reps}"></td>
+            <td th:text="${workoutProgramExercise.date}"></td>
+            <td th:text="${workoutProgramExercise.comments}"></td>
+            <!--poistonäppäin liikkeelle-->
+        </tr>
+    </table>
+
+
+</body>
+
+</html>
