@@ -9,12 +9,24 @@
 
 <body>
     <h1>Your Workout Planner</h1>
-    <br>
     <a href="/createprogram">Create new workout</a>
     <br>
     <h2>Workout Programs</h2>
-    <p>Tähän listaus valmiista ohjelmista</p>
     <!-- listaus workoutProgrammeista-->
+    <table> <!--taulukko-->
+        <tr><!--taulukon rivi-->
+            <th>Program name</th> <!--taulukon otsikko-->
+            <th>Date</th>
+        </tr>
+        <tr th:each="workoutProgram : ${workoutPrograms}">
+            <td th:text="${workoutProgram.name}"></td>
+            <td th:text="${workoutProgram.date}"></td>
+            <!--open -näppäin-->
+            <td><a href="/openprogram">Open</a></td>
+
+            <!--poistonäppäin-->
+        </tr>
+    </table>
 </body>
 
 </html>
