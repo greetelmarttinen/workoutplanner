@@ -1,14 +1,18 @@
 package backend.workoutplanner.domain;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class WorkoutProgram {
 
-    @Id
+    @Id // PK
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workoutProgramId;
 
@@ -17,6 +21,17 @@ public class WorkoutProgram {
 
     // user (FK)
     // workoutProgramExercise (FK)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workoutProgram")
+    private List<WorkoutProgramExercise> workoutProgramExercises;
+
+    // getterit ja setterit wpe -entitylle
+    public List<WorkoutProgramExercise> getWorkoutProgramExercises() {
+        return workoutProgramExercises;
+    }
+
+    public void setWorkoutProgramExercises(List<WorkoutProgramExercise> workoutProgramExercises) {
+        this.workoutProgramExercises = workoutProgramExercises;
+    }
 
     // prametriton konstruktori
     public WorkoutProgram() {

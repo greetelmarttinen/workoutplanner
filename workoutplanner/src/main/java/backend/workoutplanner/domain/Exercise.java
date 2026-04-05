@@ -1,9 +1,17 @@
 package backend.workoutplanner.domain;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Exercise {
@@ -16,6 +24,34 @@ public class Exercise {
     private String muscleGroup;
 
     // jätin tästä nyt vielä pois description ja equipment
+
+    // FK workoutprogram -entityyn
+    @JsonIgnoreProperties("exercises")
+    @ManyToOne // suhde WorkoutProgram -entityyn
+    @JoinColumn(name = "workoutProgramId")
+    private WorkoutProgram workoutProgram;
+
+    // getterit ja setterit wp -entityyn
+    public WorkoutProgram getWorkoutProgram() {
+        return workoutProgram;
+    }
+
+    public void setWorkoutProgram(WorkoutProgram workoutProgram) {
+        this.workoutProgram = workoutProgram;
+    }
+
+    // FK wpe -entityyn
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exercise")
+    private List<WorkoutProgramExercise> workoutProgramExercises;
+
+    // getterit ja setterit wpe -entityyn
+    public List<WorkoutProgramExercise> getWorkoutProgramExercises() {
+        return workoutProgramExercises;
+    }
+
+    public void setWorkoutProgramExercises(List<WorkoutProgramExercise> workoutProgramExercises) {
+        this.workoutProgramExercises = workoutProgramExercises;
+    }
 
     // parametriton konstruktori
     public Exercise() {

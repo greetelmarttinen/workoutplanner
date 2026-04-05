@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class WorkoutProgramExercise {
@@ -18,7 +20,32 @@ public class WorkoutProgramExercise {
     private String comments;
 
     // workoutProgramId (FK)
+    @ManyToOne
+    @JoinColumn(name = "workoutProgramId")
+    private WorkoutProgram workoutProgram;
+
+    // getterit ja setterit wp -entityyn
+    public WorkoutProgram getWorkoutProgram() {
+        return workoutProgram;
+    }
+
+    public void setWorkoutProgram(WorkoutProgram workoutProgram) {
+        this.workoutProgram = workoutProgram;
+    }
+
     // exerciseId (FK)
+    @ManyToOne
+    @JoinColumn(name = "exerciseId")
+    private Exercise exercise;
+
+    // getterit ja setterit exercise -entityyn
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
 
     // parametriton konstruktori
     public WorkoutProgramExercise() {
