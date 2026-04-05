@@ -53,7 +53,13 @@ public class PlannerController {
     // ohjelmasisällön luonti
     @GetMapping("/openprogram")
     public String openProgram(Model model) {
-        model.addAttribute("workoutProgramExercise", workoutProgramExerciseRepository.findAll());
+        // haetaan lista liikkeistä
+        model.addAttribute("workoutProgramExercises", workoutProgramExerciseRepository.findAll());
+        // uuden liikkeen lisäys (form)
+        model.addAttribute("workoutProgramExercise", new WorkoutProgramExercise());
+        // dropdown liikkeistä
+        model.addAttribute("exercises", exerciseRepository.findAll());
+
         return "openprogram"; // openprogram.html
     }
 
