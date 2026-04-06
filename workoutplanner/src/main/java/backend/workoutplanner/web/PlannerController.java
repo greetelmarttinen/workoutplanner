@@ -51,7 +51,7 @@ public class PlannerController {
     }
 
     // ohjelmasisällön luonti
-    @GetMapping("/openprogram")
+    @GetMapping("/openprogram/{id}")
     public String openProgram(Model model) {
         // haetaan lista liikkeistä
         model.addAttribute("workoutProgramExercises", workoutProgramExerciseRepository.findAll());
