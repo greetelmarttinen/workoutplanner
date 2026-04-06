@@ -29,7 +29,7 @@
             <tr th:each="exercise : ${exercises}">
                 <td th:text="${exercise.name}"></td>
                 <td th:text="${exercise.muscleGroup}"></td>
-                <td class="text-end"><a class="btn btn-danger"
+                <td class="text-end"><a class="btn btn-outline-danger"
                         th:href="@{/deleteExercise/{id}(id=${exercise.exerciseId})}">Delete</a></td>
             </tr>
         </table>
