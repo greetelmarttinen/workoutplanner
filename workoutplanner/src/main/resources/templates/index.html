@@ -12,28 +12,32 @@
     <div class="container">
         <h1>Your Workout Planner</h1>
         <br>
+        <a class="btn btn-secondary" href="/exerciselist">List of Exercises</a>
         <a class="btn btn-secondary" href="/createprogram">Create new workout</a>
         <br>
         <br>
-        <h3>Workout Programs</h3>
+        <h3>Programs</h3>
         <!-- listaus workoutProgrammeista-->
+        <br>
         <table class="table table-striped"> <!--taulukko-->
             <tr><!--taulukon rivi-->
                 <th>Program name</th> <!--taulukon otsikko-->
                 <th>Date</th>
-                <th type="hidden"></th>
                 <th type="hidden"></th>
             </tr>
             <tr th:each="workoutProgram : ${workoutPrograms}">
                 <td th:text="${workoutProgram.name}"></td>
                 <td th:text="${workoutProgram.date}"></td>
                 <!--open -näppäin-->
-                <td><a class="btn btn-secondary"
-                        th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a></td>
+                <td class="text-end">
+                    <a class="btn btn-secondary"
+                        th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a>
+                    <!--poistonäppäin-->
+                    <a class="btn btn-danger"
+                        th:href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a>
+                </td>
 
-                <!--poistonäppäin-->
-                <td><a class="btn btn-danger"
-                        href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a></td>
+
             </tr>
         </table>
     </div>
