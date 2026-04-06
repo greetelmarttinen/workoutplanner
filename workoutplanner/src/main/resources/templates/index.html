@@ -30,11 +30,12 @@
                 <td th:text="${workoutProgram.date}"></td>
                 <!--open -näppäin-->
                 <td class="text-end">
-                    <a class="btn btn-secondary"
+                    <a class="btn btn-outline-secondary"
                         th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a>
                     <!--poistonäppäin-->
-                    <a class="btn btn-danger"
+                    <a class="btn btn-outline-danger"
                         th:href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a>
+
                 </td>
 
 
