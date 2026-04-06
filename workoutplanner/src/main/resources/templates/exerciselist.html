@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Your Workout Planner</h1>
+        <br>
+        <!--etusivulle-->
+        <a class="btn btn-secondary" href="/index">Back</a>
+        <br>
+        <br>
+        <h3>Exercises</h3>
+        <!--listaus tietokantaan tallennetuista liikkeistä-->
+        <br>
+        <table class="table table-striped">
+            <tr>
+                <th>Exercise name</th>
+                <th>Muscle group</th>
+                <th type="hidden"></th>
+            </tr>
+            <tr th:each="exercise : ${exercises}">
+                <td th:text="${exercise.name}"></td>
+                <td th:text="${exercise.muscleGroup}"></td>
+                <td class="text-end"><a class="btn btn-danger"
+                        th:href="@{/deleteExercise/{id}(id=${exercise.exerciseId})}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+</html>
