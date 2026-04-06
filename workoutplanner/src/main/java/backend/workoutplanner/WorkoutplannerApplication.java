@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Bean;
 
 import backend.workoutplanner.domain.Exercise;
 import backend.workoutplanner.domain.ExerciseRepository;
+import backend.workoutplanner.domain.WorkoutProgram;
 import backend.workoutplanner.domain.WorkoutProgramExercise;
 import backend.workoutplanner.domain.WorkoutProgramExerciseRepository;
 // import backend.workoutplanner.domain.WorkoutProgramRepository;
+import backend.workoutplanner.domain.WorkoutProgramRepository;
 
 @SpringBootApplication
 public class WorkoutplannerApplication {
@@ -25,7 +27,8 @@ public class WorkoutplannerApplication {
 
 	// testidata
 	@Bean
-	public CommandLineRunner createDemoRows(ExerciseRepository eRepo, WorkoutProgramExerciseRepository wpeRepo) {
+	public CommandLineRunner createDemoRows(ExerciseRepository eRepo, WorkoutProgramExerciseRepository wpeRepo,
+			WorkoutProgramRepository wpRepo) {
 		return (args) -> {
 
 			log.info("Save some sample exercises");
@@ -37,8 +40,12 @@ public class WorkoutplannerApplication {
 			eRepo.save(e3);
 
 			log.info("Save some workouts (including exercises)");
-			wpeRepo.save(new WorkoutProgramExercise("4", "12, 10, 10, 8", "20.3.2026", "Hyvin meni"));
+			wpeRepo.save(new WorkoutProgramExercise("12, 10, 10, 8", "10, 12, 12, 15", "20.3.2026", "Hyvin meni"));
 
+			log.info("Save some sample workouts");
+			wpRepo.save(new WorkoutProgram("Legday 1", "1.4.2026"));
+			wpRepo.save(new WorkoutProgram("Upper body", "1.4.2026"));
+			wpRepo.save(new WorkoutProgram("Leg day 2", "1.4.2026"));
 		};
 	}
 
