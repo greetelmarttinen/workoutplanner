@@ -5,29 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Planner</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
-    <h1>Your Workout Planner</h1>
-    <button><a href="/createprogram">Create new workout</a></button>
+    <div class="container">
+        <h1>Your Workout Planner</h1>
+        <br>
+        <a class="btn btn-secondary" href="/createprogram">Create new workout</a>
+        <br>
+        <br>
+        <h3>Workout Programs</h3>
+        <!-- listaus workoutProgrammeista-->
+        <table class="table table-striped"> <!--taulukko-->
+            <tr><!--taulukon rivi-->
+                <th>Program name</th> <!--taulukon otsikko-->
+                <th>Date</th>
+                <th type="hidden"></th>
+                <th type="hidden"></th>
+            </tr>
+            <tr th:each="workoutProgram : ${workoutPrograms}">
+                <td th:text="${workoutProgram.name}"></td>
+                <td th:text="${workoutProgram.date}"></td>
+                <!--open -näppäin-->
+                <td><a class="btn btn-secondary"
+                        th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a></td>
 
-    <br>
-    <h2>Workout Programs</h2>
-    <!-- listaus workoutProgrammeista-->
-    <table> <!--taulukko-->
-        <tr><!--taulukon rivi-->
-            <th>Program name</th> <!--taulukon otsikko-->
-            <th>Date</th>
-        </tr>
-        <tr th:each="workoutProgram : ${workoutPrograms}">
-            <td th:text="${workoutProgram.name}"></td>
-            <td th:text="${workoutProgram.date}"></td>
-            <!--open -näppäin-->
-            <td><a href="/openprogram">Open</a></td>
-
-            <!--poistonäppäin-->
-        </tr>
-    </table>
+                <!--poistonäppäin-->
+                <td><a class="btn btn-danger"
+                        href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
 </body>
 
 </html>
