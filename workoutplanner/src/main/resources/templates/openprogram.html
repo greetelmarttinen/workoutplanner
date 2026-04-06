@@ -12,11 +12,16 @@
     <div class="container">
         <h1>Your Workout Planner</h1>
         <br>
+        <!--etusivulle-->
+        <a class="btn btn-secondary" href="/index">Back</a>
+        <br>
+        <br>
         <!--uuden liikkeen lisäys (form?)-->
-        <h4>Add exercise</h4>
+        <h3>Add exercise</h3>
         <div class="container">
             <div>
-                <form method="post" action="#" th:action="@{/addexercise}" th:object="${addExercise}">
+                <form method="post" action="#" th:action="@{/addexercise/{id} (id=${wProgram.workoutProgramId})}"
+                    th:object="${workoutProgramExercise}">
                     <div class="row g-1">
                         <div class="col">
                             <select id="exerciselist" th:field="${workoutProgramExercise.exercise}" class="form-select">
@@ -65,7 +70,7 @@
                 <th>Comments</th>
             </tr>
             <tr th:each="workoutProgramExercise : ${workoutProgramExercises}">
-                <td th:text="${workoutProgramExercise.exercise} ? ${workoutProgramExercise.exercise.name} : ''"></td>
+                <td th:text="${workoutProgramExercise.exercise.name}"></td>
                 <td th:text="${workoutProgramExercise.reps}"></td>
                 <td th:text="${workoutProgramExercise.weights}"></td>
                 <td th:text="${workoutProgramExercise.date}"></td>
