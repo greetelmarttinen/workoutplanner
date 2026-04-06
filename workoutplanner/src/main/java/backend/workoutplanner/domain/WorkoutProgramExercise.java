@@ -14,8 +14,8 @@ public class WorkoutProgramExercise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workoutPExerciseId;
 
-    private String sets;
     private String reps;
+    private String weights;
     private String date;
     private String comments;
 
@@ -53,8 +53,8 @@ public class WorkoutProgramExercise {
     }
 
     // parametrillinen konstruktori
-    public WorkoutProgramExercise(String sets, String reps, String date, String comments) {
-        this.sets = sets;
+    public WorkoutProgramExercise(String reps, String weights, String date, String comments) {
+        this.weights = weights;
         this.reps = reps;
         this.date = date;
         this.comments = comments;
@@ -65,8 +65,8 @@ public class WorkoutProgramExercise {
         return workoutPExerciseId;
     }
 
-    public String getSets() {
-        return sets;
+    public String getWeights() {
+        return weights;
     }
 
     public String getReps() {
@@ -86,8 +86,8 @@ public class WorkoutProgramExercise {
         this.workoutPExerciseId = workoutPExerciseId;
     }
 
-    public void setSets(String sets) {
-        this.sets = sets;
+    public void setWeights(String weights) {
+        this.weights = weights;
     }
 
     public void setReps(String reps) {
@@ -105,7 +105,8 @@ public class WorkoutProgramExercise {
     // toString
     @Override
     public String toString() {
-        return "WorkoutProgramExercise [workoutPExerciseId=" + workoutPExerciseId + ", sets=" + sets + ", reps=" + reps
+        return "WorkoutProgramExercise [workoutPExerciseId=" + workoutPExerciseId + ", weights=" + weights + ", reps="
+                + reps
                 + ", date=" + date + ", comments=" + comments + "]";
     }
 
