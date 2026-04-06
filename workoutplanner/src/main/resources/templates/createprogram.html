@@ -5,32 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Workout</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
-    <h1>Your Workout Planner</h1>
-    <br>
-    <h2>Create new program</h2>
     <div class="container">
-        <div>
-            <form method="post" action="#" th:action="@{/saveprogram}" th:object="${workoutProgram}">
-                <div class="row g-2">
-                    <div class="col">
-                        <input type="text" th:field="${workoutProgram.name}" placeholder="Name your workout program">
-                    </div>
+        <h1>Your Workout Planner</h1>
+        <br>
+        <h2>Create new program</h2>
+        <br>
 
-                    <div class="col">
-                        <input type="text" th:field="${workoutProgram.date}" placeholder="Date">
-                    </div>
-
-                    <div class="col">
-                        <button type="submit">Create workout</button>
-                    </div>
+        <form method="post" action="#" th:action="@{/saveprogram}" th:object="${workoutProgram}">
+            <div class="row g-3">
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="${workoutProgram.name}"
+                        placeholder="Name your workout program">
                 </div>
-            </form>
-        </div>
-    </div>
 
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="${workoutProgram.date}" placeholder="Date">
+                </div>
+
+                <div class="col-sm">
+                    <button type="submit" class="btn btn-success">Create workout</button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
 </body>
 
 </html>
