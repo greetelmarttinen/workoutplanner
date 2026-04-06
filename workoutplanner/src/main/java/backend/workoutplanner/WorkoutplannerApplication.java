@@ -43,7 +43,7 @@ public class WorkoutplannerApplication {
 			wpeRepo.save(new WorkoutProgramExercise("12, 10, 10, 8", "10, 12, 12, 15", "20.3.2026", "Hyvin meni"));
 
 			log.info("Save some sample workouts");
-			wpRepo.save(new WorkoutProgram("Legday 1", "1.4.2026"));
+			wpRepo.save(new WorkoutProgram("Leg day 1", "1.4.2026"));
 			wpRepo.save(new WorkoutProgram("Upper body", "1.4.2026"));
 			wpRepo.save(new WorkoutProgram("Leg day 2", "1.4.2026"));
 		};
