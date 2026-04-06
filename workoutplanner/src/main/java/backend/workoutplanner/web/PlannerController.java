@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import backend.workoutplanner.domain.ExerciseRepository;
@@ -35,6 +36,13 @@ public class PlannerController {
         return "index"; // index.html
     }
 
+    // lista liikkeistä
+    @GetMapping("/exerciselist")
+    public String getExercises(Model model) {
+        model.addAttribute("exercises", exerciseRepository.findAll());
+        return "exerciselist"; // exerciselist.html
+    }
+
     // uuden ohjelman luonti (form)
     @GetMapping("/createprogram")
     public String createWorkout(Model model) {
@@ -50,11 +58,17 @@ public class PlannerController {
         return "redirect:/index"; // index.html
     }
 
-    // ohjelmasisällön luonti
+    // ohjelmasisällön luonti (tiettyyn ohjelmaan)
     @GetMapping("/openprogram/{id}")
-    public String openProgram(Model model) {
+    public String openProgram(@PathVariable Long id, Model model) {
+
+        // haetaan ohjelma id:n perusteella
+        WorkoutProgram wProgram = workoutProgramRepository.findById(id).get();
+        // lisätään modeliin
+        model.addAttribute("wProgram", wProgram);
+
         // haetaan lista liikkeistä
-        model.addAttribute("workoutProgramExercises", workoutProgramExerciseRepository.findAll());
+        model.addAttribute("workoutProgramExercises", workoutProgramExerciseRepository.findByWorkoutProgram(wProgram));
         // uuden liikkeen lisäys (form)
         model.addAttribute("workoutProgramExercise", new WorkoutProgramExercise());
         // dropdown liikkeistä
@@ -63,11 +77,24 @@ public class PlannerController {
         return "openprogram"; // openprogram.html
     }
 
-    // liikkeiden tallennus ohjelmaan
-    @PostMapping("/addexercise")
-    public String save(@ModelAttribute WorkoutProgramExercise addExercise) {
+    // liikkeiden tallennus (kyseiseen) ohjelmaan
+    @PostMapping("/addexercise/{programId}")
+    public String save(@PathVariable Long programId, @ModelAttribute WorkoutProgramExercise addExercise) {
+
+        // haetaan ohjelma id:n perusteella
+        WorkoutProgram wProgram = workoutProgramRepository.findById(programId).get();
+        // lisätään liike ohjelmaan
+        addExercise.setWorkoutProgram(wProgram);
+        // tallennetaan
         workoutProgramExerciseRepository.save(addExercise);
-        return "redirect:/openprogram"; // openprogram
+        return "redirect:/openprogram/" + programId; // openprogram
+    }
+
+    // ohjelman poistaminen
+    @GetMapping("/delete/{id}")
+    public String deleteProgram(@PathVariable("id") Long id, Model model) {
+        workoutProgramRepository.deleteById(id);
+        return "redirect:../index"; // index.html
     }
 
 }
