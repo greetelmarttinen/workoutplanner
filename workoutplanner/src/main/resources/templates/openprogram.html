@@ -68,6 +68,7 @@
                 <th>Weights</th>
                 <th>Date</th>
                 <th>Comments</th>
+                <th type="hidden"></th>
             </tr>
             <tr th:each="workoutProgramExercise : ${workoutProgramExercises}">
                 <td th:text="${workoutProgramExercise.exercise.name}"></td>
@@ -76,6 +77,8 @@
                 <td th:text="${workoutProgramExercise.date}"></td>
                 <td th:text="${workoutProgramExercise.comments}"></td>
                 <!--poistonäppäin liikkeelle-->
+                <td class="text-end"> <a class="btn btn-outline-danger"
+                        th:href="@{/deleteWPE/{id}(id=${workoutProgramExercise.workoutPExerciseId})}">Delete</a></td>
             </tr>
         </table>
 

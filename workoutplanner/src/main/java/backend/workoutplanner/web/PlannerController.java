@@ -97,4 +97,19 @@ public class PlannerController {
         return "redirect:../index"; // index.html
     }
 
+    // liikkeen poisto ohjelmasta
+    @GetMapping("/deleteWPE/{id}")
+    public String deleteExerciseFromProgram(@PathVariable("id") Long id, Model model) {
+        // haetaan kyseinen liike
+        WorkoutProgramExercise wpe = workoutProgramExerciseRepository.findById(id).get();
+
+        // tallennetaan ohjelman id
+        Long programId = wpe.getWorkoutProgram().getWorkoutProgramId();
+
+        // poistetaan liike ohjelmasta
+        workoutProgramExerciseRepository.deleteById(id);
+
+        return "redirect:/openprogram/" + programId; // openprogram.html
+    }
+
 }
