@@ -26,7 +26,6 @@ public class Exercise {
     // jätin tästä nyt vielä pois description ja equipment
 
     // FK workoutprogram -entityyn
-    @JsonIgnoreProperties("exercises")
     @ManyToOne // suhde WorkoutProgram -entityyn
     @JoinColumn(name = "workoutProgramId")
     private WorkoutProgram workoutProgram;

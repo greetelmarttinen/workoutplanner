@@ -24,7 +24,6 @@ public class WorkoutProgram {
     private String date;
 
     // userId (FK)
-    @JsonIgnoreProperties("workoutPrograms")
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
