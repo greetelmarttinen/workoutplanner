@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="UTF-8">
@@ -10,37 +11,78 @@
 
 <body>
     <div class="container">
-        <h1>Your Workout Planner</h1>
-        <br>
+        <div class="row">
+            <div class="col">
+                <h1>Your Workout Planner</h1>
+            </div>
+            <div class="col text-end mt-2">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign out" class="btn btn-secondary">
+                </form>
+            </div>
+        </div>
+
+        <!-- tervetuloa -teksti kirjautumisen jälkeen-->
+        <div class="mt-3">
+            <p>Welcome <span sec:authentication="name"></span>!</p>
+        </div>
+
+
         <a class="btn btn-secondary" href="/exerciselist">List of Exercises</a>
-        <a class="btn btn-secondary" href="/createprogram">Create new workout</a>
-        <br>
-        <br>
-        <h3>Programs</h3>
-        <!-- listaus workoutProgrammeista-->
-        <br>
-        <table class="table table-striped"> <!--taulukko-->
-            <tr><!--taulukon rivi-->
-                <th>Program name</th> <!--taulukon otsikko-->
-                <th>Date</th>
-                <th type="hidden"></th>
-            </tr>
-            <tr th:each="workoutProgram : ${workoutPrograms}">
-                <td th:text="${workoutProgram.name}"></td>
-                <td th:text="${workoutProgram.date}"></td>
-                <!--open -näppäin-->
-                <td class="text-end">
-                    <a class="btn btn-outline-secondary"
-                        th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a>
-                    <!--poistonäppäin-->
-                    <a class="btn btn-outline-danger"
-                        th:href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a>
-
-                </td>
+        <!-- <a class="btn btn-secondary" href="/createprogram">Create new workout</a>-->
 
 
-            </tr>
-        </table>
+        <br>
+        <div class="mt-4">
+            <div class="mb-3">
+                <h3>Create new program</h3>
+            </div>
+            <form method="post" action="#" th:action="@{/saveprogram}" th:object="${workoutProgram}">
+                <div class="row g-3">
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" th:field="${workoutProgram.name}"
+                            placeholder="Name your workout program">
+                    </div>
+
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" th:field="${workoutProgram.date}" placeholder="Date">
+                    </div>
+
+                    <div class="col text-end">
+                        <button type="submit" class="btn btn-success">Create workout</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-4">
+            <div class="mb-3">
+                <h3>Programs</h3>
+            </div>
+            <!-- listaus workoutProgrammeista-->
+            <table class="table table-striped"> <!--taulukko-->
+                <tr><!--taulukon rivi-->
+                    <th>Program name</th> <!--taulukon otsikko-->
+                    <th>Date</th>
+                    <th type="hidden"></th>
+                </tr>
+                <tr th:each="workoutProgram : ${workoutPrograms}">
+                    <td th:text="${workoutProgram.name}"></td>
+                    <td th:text="${workoutProgram.date}"></td>
+                    <!--open -näppäin-->
+                    <td class="text-end">
+                        <a class="btn btn-outline-secondary"
+                            th:href="@{/openprogram/{id} (id = ${workoutProgram.workoutProgramId})}">Open</a>
+                        <!--poistonäppäin-->
+                        <a class="btn btn-outline-danger"
+                            th:href="@{/delete/{id} (id = ${workoutProgram.workoutProgramId})}">Delete</a>
+
+                    </td>
+
+
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 
