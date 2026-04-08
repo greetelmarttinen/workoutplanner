@@ -23,6 +23,9 @@
         <div sec:authorize="hasAuthority('ADMIN')">
             <form method="post" action="#" th:action="@{/saveexercise}" th:object="${exercise}">
                 <div class="row g-3">
+                    <div>
+                        <input type="hidden" th:field="${exercise.exerciseId}">
+                    </div>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" th:field="${exercise.name}" placeholder="Exercise">
                     </div>

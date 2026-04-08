@@ -90,7 +90,7 @@ public class PlannerController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String saveExercise(@ModelAttribute Exercise exercise) {
         exerciseRepository.save(exercise);
-        return "redirect:exerciselist"; // exerciselist.html
+        return "redirect:/exerciselist"; // exerciselist.html
 
     }
 
