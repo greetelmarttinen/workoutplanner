@@ -18,8 +18,30 @@
         <br>
         <br>
         <h3>Exercises</h3>
-        <!--listaus tietokantaan tallennetuista liikkeistä-->
+
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <form method="post" action="#" th:action="@{/saveexercise}" th:object="${exercise}">
+                <div class="row g-3">
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" th:field="${exercise.name}" placeholder="Exercise">
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" th:field="${exercise.muscleGroup}"
+                            placeholder="Muscle group">
+                    </div>
+                    <div class="col text-end">
+                        <button type="submit" class="btn btn-success">Add exercise</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
         <br>
+
+        <!--listaus tietokantaan tallennetuista liikkeistä-->
         <table class="table table-striped">
             <tr>
                 <th>Exercise name</th>
@@ -29,8 +51,14 @@
             <tr th:each="exercise : ${exercises}">
                 <td th:text="${exercise.name}"></td>
                 <td th:text="${exercise.muscleGroup}"></td>
-                <td class="text-end"><a class="btn btn-outline-danger"
-                        th:href="@{/deleteExercise/{id}(id=${exercise.exerciseId})}">Delete</a></td>
+                <td type="hidden" sec:authorize="hasAuthority ('USER')"></td>
+                <td sec:authorize="hasAuthority ('ADMIN')" class="text-end">
+                    <a class="btn btn-outline-secondary"
+                        th:href="@{/editExercise/{id}(id=${exercise.exerciseId})}">Edit</a>
+                    <a class="btn btn-outline-danger"
+                        th:href="@{/deleteExercise/{id}(id=${exercise.exerciseId})}">Delete</a>
+                </td>
+
             </tr>
         </table>
     </div>
