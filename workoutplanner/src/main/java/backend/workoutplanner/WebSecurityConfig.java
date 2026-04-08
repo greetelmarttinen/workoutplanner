@@ -33,7 +33,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 authorize -> authorize
-                        .requestMatchers("/css/**")
+                        .requestMatchers("/css/**", "/h2-console/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -42,7 +42,11 @@ public class WebSecurityConfig {
                         .permitAll())
                 .logout(logout -> logout // uloskirjautuminen on sallittu kaikille
                         .permitAll()
-                        .invalidateHttpSession(true));
+                        .invalidateHttpSession(true))
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**"))
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable()));
         return http.build();
     }
 
