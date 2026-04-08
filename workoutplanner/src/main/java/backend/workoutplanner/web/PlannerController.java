@@ -2,6 +2,8 @@ package backend.workoutplanner.web;
 
 import backend.workoutplanner.domain.WorkoutProgramExerciseRepository;
 import backend.workoutplanner.domain.WorkoutProgramRepository;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import backend.workoutplanner.domain.Exercise;
 import backend.workoutplanner.domain.ExerciseRepository;
 import backend.workoutplanner.domain.WorkoutProgram;
 import backend.workoutplanner.domain.WorkoutProgramExercise;
@@ -32,31 +35,71 @@ public class PlannerController {
     // 'kotisivu'
     @GetMapping({ "/", "/index" })
     public String mainPage(Model model) {
+        // lista tallennetuista ohjelmista
         model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+
+        // uuden ohjelman tallentaminen/lisäys listaan
+        model.addAttribute("workoutProgram", new WorkoutProgram());
+
         return "index"; // index.html
+    }
+
+    // ohjelman tallennus
+    @PostMapping("/saveprogram")
+    public String saveProgram(@ModelAttribute WorkoutProgram workoutProgram) {
+        workoutProgramRepository.save(workoutProgram);
+        return "redirect:index"; // index.html
     }
 
     // lista liikkeistä
     @GetMapping("/exerciselist")
     public String getExercises(Model model) {
+        // haetaan liikkeet tietokannasta
         model.addAttribute("exercises", exerciseRepository.findAll());
+
+        // uuden liikkeen lisäys listaan
+        model.addAttribute("exercise", new Exercise());
+
         return "exerciselist"; // exerciselist.html
     }
 
+    // liikkeen poistaminen listasta, ADMIN oikeus
+    @GetMapping("/deleteExercise/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String deleteExercise(@PathVariable("id") Long exerciseId, Model model) {
+        exerciseRepository.deleteById(exerciseId);
+        return "redirect:../exerciselist"; // exerciselist.html
+    }
+
+    // liikkeen tietojen muokkaaminen, ADMIN oikeus
+    @GetMapping("/editExercise/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String editExercise(@PathVariable("id") Long exerciseId, Model model) {
+        // haetaan liike id:n perusteella ja tallennetaan modeliin
+        Exercise exercise = exerciseRepository.findById(exerciseId).orElse(null);
+        model.addAttribute("exercise", exercise);
+
+        // lista kaikista liikkeistä
+        model.addAttribute("exercises", exerciseRepository.findAll());
+
+        return "exerciselist"; // exerciselist.html
+    }
+
+    // uuden liikkeen lisääminen listaan
+    @PostMapping("/saveexercise")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String saveExercise(@ModelAttribute Exercise exercise) {
+        exerciseRepository.save(exercise);
+        return "redirect:exerciselist"; // exerciselist.html
+
+    }
+
     // uuden ohjelman luonti (form)
-    @GetMapping("/createprogram")
-    public String createWorkout(Model model) {
-        model.addAttribute("workoutProgram", new WorkoutProgram());
-
-        return "createprogram"; // createprogram.html
-    }
-
-    // ohjelman tallennus
-    @PostMapping("/saveprogram")
-    public String save(@ModelAttribute WorkoutProgram workoutProgram) {
-        workoutProgramRepository.save(workoutProgram);
-        return "redirect:/index"; // index.html
-    }
+    // @GetMapping("/createprogram")
+    // public String createWorkout(Model model) {
+    // model.addAttribute("workoutProgram", new WorkoutProgram());
+    // return "createprogram"; // createprogram.html
+    // }
 
     // ohjelmasisällön luonti (tiettyyn ohjelmaan)
     @GetMapping("/openprogram/{id}")
