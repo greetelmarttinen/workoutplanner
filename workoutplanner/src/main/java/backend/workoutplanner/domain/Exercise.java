@@ -41,6 +41,7 @@ public class Exercise {
     }
 
     // FK wpe -entityyn
+    @JsonIgnoreProperties("exercise")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "exercise")
     private List<WorkoutProgramExercise> workoutProgramExercises;
 

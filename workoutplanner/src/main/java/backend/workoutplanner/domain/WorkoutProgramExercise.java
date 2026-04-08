@@ -1,5 +1,7 @@
 package backend.workoutplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class WorkoutProgramExercise {
     private String comments;
 
     // workoutProgramId (FK)
+    @JsonIgnoreProperties("workoutProgramExercises")
     @ManyToOne
     @JoinColumn(name = "workoutProgramId")
     private WorkoutProgram workoutProgram;
@@ -34,6 +37,7 @@ public class WorkoutProgramExercise {
     }
 
     // exerciseId (FK)
+    @JsonIgnoreProperties("workoutProgramExercises")
     @ManyToOne
     @JoinColumn(name = "exerciseId")
     private Exercise exercise;
