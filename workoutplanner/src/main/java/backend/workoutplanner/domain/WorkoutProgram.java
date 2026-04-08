@@ -2,11 +2,15 @@ package backend.workoutplanner.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -19,8 +23,23 @@ public class WorkoutProgram {
     private String name;
     private String date;
 
-    // user (FK)
+    // userId (FK)
+    @JsonIgnoreProperties("workoutPrograms")
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    // getterit ja setterit user -entitylle
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     // workoutProgramExercise (FK)
+    @JsonIgnoreProperties("workoutProgram")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "workoutProgram")
     private List<WorkoutProgramExercise> workoutProgramExercises;
 
