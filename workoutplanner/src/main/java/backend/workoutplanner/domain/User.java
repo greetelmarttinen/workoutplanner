@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -15,12 +18,18 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private Long userId;
 
+    @NotBlank(message = "Username is mandatory") // estää virheellisen syötteen sovelluksessa
+    // nullable estää tallennuksen tietokannassa
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 6, message = "Password must be at least 6 characters") // tarkistetaan salasanan minimipituus
     @Column(name = "password", nullable = false)
     private String passwordHash;
 
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Invalid email format") // tarkistetaan että email-syöte on oikeanlainen
     @Column(name = "email", nullable = false)
     private String email;
 
