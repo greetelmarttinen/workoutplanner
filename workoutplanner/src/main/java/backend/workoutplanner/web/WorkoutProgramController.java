@@ -3,9 +3,11 @@ package backend.workoutplanner.web;
 import backend.workoutplanner.domain.ExerciseRepository;
 import backend.workoutplanner.domain.WorkoutProgramExerciseRepository;
 import backend.workoutplanner.domain.WorkoutProgramRepository;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +44,15 @@ public class WorkoutProgramController {
 
     // ohjelman tallennus
     @PostMapping("/saveprogram")
-    public String saveProgram(@ModelAttribute WorkoutProgram workoutProgram) {
+    public String saveProgram(@Valid @ModelAttribute WorkoutProgram workoutProgram, BindingResult bindingResult,
+            Model model) {
+        // virheidenkäsittely
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+            model.addAttribute("workoutProgram", workoutProgram);
+            return "index"; // index.html
+        }
+
         workoutProgramRepository.save(workoutProgram);
         return "redirect:index"; // index.html
     }

@@ -1,13 +1,13 @@
 package backend.workoutplanner.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class WorkoutProgramExercise {
@@ -16,7 +16,11 @@ public class WorkoutProgramExercise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workoutPExerciseId;
 
+    @NotBlank(message = "Reps is required")
     private String reps;
+
+    // painot voi olla vielä tyhjänä, koska ei välttämättä tiedä vielä millä
+    // painoilla treenaa
     private String weights;
     private String date;
     private String comments;
@@ -36,6 +40,7 @@ public class WorkoutProgramExercise {
     }
 
     // exerciseId (FK)
+    // @NotNull(message = "Exercise is required")
     @ManyToOne
     @JoinColumn(name = "exerciseId")
     private Exercise exercise;

@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Exercise {
@@ -20,7 +22,11 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long exerciseId;
 
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
+
+    @Size(max = 100)
     private String muscleGroup;
 
     // jätin tästä nyt vielä pois description ja equipment

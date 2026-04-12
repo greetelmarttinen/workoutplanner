@@ -21,12 +21,11 @@
         <form method="post" action="#" th:action="@{/saveprogram}" th:object="${workoutProgram}">
             <div class="row g-3">
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="${workoutProgram.name}"
-                        placeholder="Name your workout program">
+                    <input type="text" class="form-control" th:field="*{name}" placeholder="Name your workout program">
                 </div>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="${workoutProgram.date}" placeholder="Date">
+                    <input type="text" class="form-control" th:field="*{date}" placeholder="Date">
                 </div>
 
                 <div class="col-sm">

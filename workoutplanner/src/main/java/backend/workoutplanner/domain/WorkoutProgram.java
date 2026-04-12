@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class WorkoutProgram {
@@ -20,7 +22,11 @@ public class WorkoutProgram {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workoutProgramId;
 
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
+
+    @NotBlank
     private String date;
 
     // userId (FK)

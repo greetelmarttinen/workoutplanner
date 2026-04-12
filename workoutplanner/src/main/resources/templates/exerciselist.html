@@ -24,14 +24,14 @@
             <form method="post" action="#" th:action="@{/saveexercise}" th:object="${exercise}">
                 <div class="row g-3">
                     <div>
-                        <input type="hidden" th:field="${exercise.exerciseId}">
+                        <input type="hidden" th:field="*{exerciseId}">
                     </div>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" th:field="${exercise.name}" placeholder="Exercise">
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Exercise">
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     </div>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" th:field="${exercise.muscleGroup}"
-                            placeholder="Muscle group">
+                        <input type="text" class="form-control" th:field="*{muscleGroup}" placeholder="Muscle group">
                     </div>
                     <div class="col text-end">
                         <button type="submit" class="btn btn-success">Add exercise</button>
@@ -54,7 +54,7 @@
             <tr th:each="exercise : ${exercises}">
                 <td th:text="${exercise.name}"></td>
                 <td th:text="${exercise.muscleGroup}"></td>
-                <td type="hidden" sec:authorize="hasAuthority ('USER')"></td>
+                <td type="hidden" sec:authorize="hasAuthority('USER')"></td>
                 <td sec:authorize="hasAuthority ('ADMIN')" class="text-end">
                     <a class="btn btn-outline-secondary"
                         th:href="@{/editExercise/{id}(id=${exercise.exerciseId})}">Edit</a>

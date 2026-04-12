@@ -24,31 +24,29 @@
                     th:object="${workoutProgramExercise}">
                     <div class="row g-1">
                         <div class="col">
-                            <select id="exerciselist" th:field="${workoutProgramExercise.exercise}" class="form-select">
+                            <select id="exerciselist" th:field="*{exercise}" class="form-select">
                                 <option value="">Select exercise</option>
                                 <option th:each="exercise : ${exercises}" th:value="${exercise.exerciseId}"
                                     th:text="${exercise.name}"></option>
                             </select>
+                            <div th:if="${#fields.hasErrors('exercise')}" th:errors="*{exercise}"></div>
                         </div>
 
                         <div class="col">
-                            <input type="text" class="form-control" th:field="${workoutProgramExercise.reps}"
-                                placeholder="Reps">
+                            <input type="text" class="form-control" th:field="*{reps}" placeholder="Reps">
+                            <div th:if="${#fields.hasErrors('reps')}" th:errors="*{reps}"></div>
                         </div>
 
                         <div class="col">
-                            <input type="text" class="form-control" th:field="${workoutProgramExercise.weights}"
-                                placeholder="Weights">
+                            <input type="text" class="form-control" th:field="*{weights}" placeholder="Weights">
                         </div>
 
                         <div class="col">
-                            <input type="text" class="form-control" th:field="${workoutProgramExercise.date}"
-                                placeholder="Date">
+                            <input type="text" class="form-control" th:field="*{date}" placeholder="Date">
                         </div>
 
                         <div class="col">
-                            <input type="text" class="form-control" th:field="${workoutProgramExercise.comments}"
-                                placeholder="Comments">
+                            <input type="text" class="form-control" th:field="*{comments}" placeholder="Comments">
                         </div>
 
                         <div class="col text-end">
