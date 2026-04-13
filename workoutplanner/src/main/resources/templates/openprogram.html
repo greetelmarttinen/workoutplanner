@@ -22,6 +22,10 @@
             <div>
                 <form method="post" action="#" th:action="@{/addexercise/{id} (id=${wProgram.workoutProgramId})}"
                     th:object="${workoutProgramExercise}">
+
+                    <!-- wpe id piilotettuna, jotta edit toiminto toimii oikein -->
+                    <input type="hidden" th:field="*{workoutPExerciseId}">
+
                     <div class="row g-1">
                         <div class="col">
                             <select id="exerciselist" th:field="*{exercise}" class="form-select">
@@ -75,8 +79,12 @@
                 <td th:text="${workoutProgramExercise.date}"></td>
                 <td th:text="${workoutProgramExercise.comments}"></td>
                 <!--poistonäppäin liikkeelle-->
-                <td class="text-end"> <a class="btn btn-outline-danger"
-                        th:href="@{/deleteWPE/{id}(id=${workoutProgramExercise.workoutPExerciseId})}">Delete</a></td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary"
+                        th:href="@{/editWPE/{id}(id=${workoutProgramExercise.workoutPExerciseId})}">Edit</a>
+                    <a class="btn btn-outline-danger"
+                        th:href="@{/deleteWPE/{id}(id=${workoutProgramExercise.workoutPExerciseId})}">Delete</a>
+                </td>
             </tr>
         </table>
 
