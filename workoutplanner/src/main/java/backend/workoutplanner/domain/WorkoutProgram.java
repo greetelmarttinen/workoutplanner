@@ -22,11 +22,11 @@ public class WorkoutProgram {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workoutProgramId;
 
-    @NotBlank
+    @NotBlank(message = "Name your workout")
     @Size(min = 2, max = 50)
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Insert date")
     private String date;
 
     // userId (FK)
@@ -63,9 +63,10 @@ public class WorkoutProgram {
     }
 
     // parametrillinen konstruktori
-    public WorkoutProgram(String name, String date) {
+    public WorkoutProgram(String name, String date, User user) {
         this.name = name;
         this.date = date;
+        this.user = user;
     }
 
     // getterit
