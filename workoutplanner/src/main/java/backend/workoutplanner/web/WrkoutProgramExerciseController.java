@@ -46,7 +46,7 @@ public class WrkoutProgramExerciseController {
             model.addAttribute("wProgram", wProgram);
             model.addAttribute("wProgram", workoutProgramRepository.findById(programId).orElse(null));
             model.addAttribute("exercises", exerciseRepository.findAll());
-            return "openprogram";
+            return "openprogram"; // openprogram.html
 
         }
 
@@ -56,7 +56,28 @@ public class WrkoutProgramExerciseController {
         addExercise.setWorkoutProgram(wProgram);
         // tallennetaan
         workoutProgramExerciseRepository.save(addExercise);
-        return "redirect:/openprogram/" + programId; // openprogram
+        return "redirect:/openprogram/" + programId; // openprogram.html
+    }
+
+    // liikkeisiin liittyvien tietojen muokkaaminen
+    @GetMapping("/editWPE/{id}")
+    public String editExerciseFromProgram(@PathVariable Long id, Model model) {
+
+        // haetaan kyseinen liike ohjelmasta
+        WorkoutProgramExercise wpe = workoutProgramExerciseRepository.findById(id).get();
+        // haetaan kyseinen ohjelma
+        WorkoutProgram wProgram = wpe.getWorkoutProgram();
+
+        // lisätään modeliin
+        model.addAttribute("wProgram", wProgram);
+        model.addAttribute("workoutProgramExercises", workoutProgramExerciseRepository.findByWorkoutProgram(wProgram));
+
+        // täytetään formiin muokattavat arvot
+        model.addAttribute("workoutProgramExercise", wpe);
+
+        model.addAttribute("exercises", exerciseRepository.findAll());
+
+        return "openprogram"; // openprogram.html
     }
 
     // liikkeen poisto ohjelmasta
