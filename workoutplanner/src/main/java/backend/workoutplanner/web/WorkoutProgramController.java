@@ -1,10 +1,13 @@
 package backend.workoutplanner.web;
 
 import backend.workoutplanner.domain.ExerciseRepository;
+import backend.workoutplanner.domain.User;
+import backend.workoutplanner.domain.UserRepository;
 import backend.workoutplanner.domain.WorkoutProgramExerciseRepository;
 import backend.workoutplanner.domain.WorkoutProgramRepository;
 import jakarta.validation.Valid;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,19 +25,33 @@ public class WorkoutProgramController {
     private final WorkoutProgramExerciseRepository workoutProgramExerciseRepository;
     private final ExerciseRepository exerciseRepository;
     private final WorkoutProgramRepository workoutProgramRepository;
+    private final UserRepository userRepository;
 
     WorkoutProgramController(WorkoutProgramRepository workoutProgramRepository, ExerciseRepository exerciseRepository,
-            WorkoutProgramExerciseRepository workoutProgramExerciseRepository) {
+            WorkoutProgramExerciseRepository workoutProgramExerciseRepository, UserRepository userRepository) {
         this.workoutProgramRepository = workoutProgramRepository;
         this.exerciseRepository = exerciseRepository;
         this.workoutProgramExerciseRepository = workoutProgramExerciseRepository;
+        this.userRepository = userRepository;
     }
 
     // 'kotisivu'
     @GetMapping({ "/", "/index" })
-    public String mainPage(Model model) {
-        // lista tallennetuista ohjelmista
-        model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+    public String mainPage(Model model, Authentication authentication) {
+
+        // haetaan kirjautuneen käyttäjän tiedot
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username);
+
+        // jos käyttäjä on admin
+        if (user.getRole().equals("ADMIN")) {
+            // lista KAIKISTA tallennetuista ohjelmista
+            model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+        } else {
+            // muuten näkyviin vain käyttäjän omat ohjelmat
+            model.addAttribute("workoutPrograms", workoutProgramRepository.findByUser(user));
+        }
 
         // uuden ohjelman tallentaminen/lisäys listaan
         model.addAttribute("workoutProgram", new WorkoutProgram());
@@ -45,13 +62,30 @@ public class WorkoutProgramController {
     // ohjelman tallennus
     @PostMapping("/saveprogram")
     public String saveProgram(@Valid @ModelAttribute WorkoutProgram workoutProgram, BindingResult bindingResult,
-            Model model) {
+            Model model, Authentication authentication) {
+
+        // tarkistetaaan kirjautunut käyttäjä
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
+
         // virheidenkäsittely
         if (bindingResult.hasErrors()) {
-            model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+
+            if (user.getRole().equals("ADMIN")) {
+                // jos kirjatunut käyttäjä on ADMIN -> näytetään kaikki tietokantaan tallennetut
+                // ohjelmat kaikilta käyttäjiltä
+                model.addAttribute("workoutPrograms", workoutProgramRepository.findAll());
+
+            } else {
+                // muu kirjautunut käyttäjä -> näkyy vain käyttäjän omat ohjelmat
+                model.addAttribute("workoutPrograms", workoutProgramRepository.findByUser(user));
+            }
             model.addAttribute("workoutProgram", workoutProgram);
             return "index"; // index.html
         }
+
+        // tallennetaan ohjelma tietylle/kyseiselle kirjautuneelle käyttäjälle
+        workoutProgram.setUser(user);
 
         workoutProgramRepository.save(workoutProgram);
         return "redirect:index"; // index.html
