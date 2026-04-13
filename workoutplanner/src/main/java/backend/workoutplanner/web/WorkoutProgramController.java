@@ -41,7 +41,6 @@ public class WorkoutProgramController {
 
         // haetaan kirjautuneen käyttäjän tiedot
         String username = authentication.getName();
-
         User user = userRepository.findByUsername(username);
 
         // jos käyttäjä on admin
