@@ -20,7 +20,8 @@
         <h3>Add exercise</h3>
         <div class="container">
             <div>
-                <form method="post" action="#" th:action="@{/addexercise/{id} (id=${wProgram.workoutProgramId})}"
+                <form method="post" action="#"
+                    th:action="@{/addexercise/{programId} (programId=${wProgram.workoutProgramId})}"
                     th:object="${workoutProgramExercise}">
 
                     <!-- wpe id piilotettuna, jotta edit toiminto toimii oikein -->
