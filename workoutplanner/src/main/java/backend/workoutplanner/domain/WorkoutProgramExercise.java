@@ -40,7 +40,7 @@ public class WorkoutProgramExercise {
     }
 
     // exerciseId (FK)
-    // @NotNull(message = "Exercise is required")
+    @NotNull(message = "Exercise is required")
     @ManyToOne
     @JoinColumn(name = "exerciseId")
     private Exercise exercise;
