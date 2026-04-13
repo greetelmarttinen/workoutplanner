@@ -44,7 +44,9 @@ public class WrkoutProgramExerciseController {
             WorkoutProgram wProgram = workoutProgramRepository.findById(programId).orElse(null);
 
             model.addAttribute("wProgram", wProgram);
-            model.addAttribute("wProgram", workoutProgramRepository.findById(programId).orElse(null));
+            model.addAttribute("workoutProgramExercises",
+                    workoutProgramExerciseRepository.findByWorkoutProgram(wProgram));
+            model.addAttribute("workoutProgramExercise", addExercise);
             model.addAttribute("exercises", exerciseRepository.findAll());
             return "openprogram"; // openprogram.html
 
