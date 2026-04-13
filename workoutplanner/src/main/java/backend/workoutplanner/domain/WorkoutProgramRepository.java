@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface WorkoutProgramRepository extends CrudRepository<WorkoutProgram, Long> {
 
     List<WorkoutProgram> findByName(String name);
+
+    List<WorkoutProgram> findByUser(User user);
 }
